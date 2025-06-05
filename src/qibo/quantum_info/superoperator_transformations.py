@@ -266,17 +266,24 @@ def to_pauli_liouville(
 
 
 def _to_pauli_liouville_fht(
-    channel,
+    matrix,
     normalize: bool = False,
     order: str = "row",
     pauli_order: str = "IXYZ",
     backend=None,
 ):
+    """Implements algorithm from https://doi.org/10.1088/1367-2630/adb44d.
+    channel should be matrix of dim NxN,  N = 2^n"""
     backend = _check_backend(backend)
 
+    dims = matrix.shape[-1]
+
     # 1. XOR - Transform (Eq. 36):  a_r,q  <--  a_r⊕q,q
+    for r in range(dims):
+        for q in range(dims):
+            matrix[r,q], matrix[r, q^r] = matrix[r, q^r], matrix[r, q]  # swap values
     channel = backend.np.reshape()
-    # 
+    # iterating with python is slow
 
 
 def to_chi(
