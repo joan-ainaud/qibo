@@ -220,6 +220,7 @@ def to_liouville(channel, order: str = "row", backend=None):
 
 def to_pauli_liouville(
     channel,
+    method: Optional[str] = None,
     normalize: bool = False,
     order: str = "row",
     pauli_order: str = "IXYZ",
@@ -262,6 +263,20 @@ def to_pauli_liouville(
     channel = unitary @ channel @ backend.np.conj(unitary).T
 
     return channel
+
+
+def _to_pauli_liouville_fht(
+    channel,
+    normalize: bool = False,
+    order: str = "row",
+    pauli_order: str = "IXYZ",
+    backend=None,
+):
+    backend = _check_backend(backend)
+
+    # 1. XOR - Transform (Eq. 36):  a_r,q  <--  a_r⊕q,q
+    channel = backend.np.reshape()
+    # 
 
 
 def to_chi(
